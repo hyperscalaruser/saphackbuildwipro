@@ -1,1 +1,43 @@
 
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: sapwiprotest-train
+  annotations:
+    scenarios.ai.sap.com/description: "SAP developers tutorial scenario"
+    scenarios.ai.sap.com/name: "sapwiprotest-scenario"
+    executables.ai.sap.com/description: "Text classification Scikit training executable"
+    executables.ai.sap.com/name: "sapwiprotest-exec"
+    artifacts.ai.sap.com/text-data.kind: "dataset"
+    artifacts.ai.sap.com/text-model-tutorial.kind: "model"
+  labels:
+    scenarios.ai.sap.com/id: "sapwiprotest"
+    executables.ai.sap.com/id: "sapwiprotest"
+    ai.sap.com/version: "1.0.0"
+spec:
+  imagePullSecrets:
+    - name: docker-registry-secret
+  entrypoint: text-clf-sk-training
+  templates:
+    - name: text-clf-sk-training
+      metadata:
+        labels:
+          ai.sap.com/resourcePlan: starter
+      inputs:
+        artifacts:
+          - name: text-data
+            path: /app/data/
+      outputs:
+        artifacts:
+          - name: sapwiprotest-model
+            path: /app/model
+            globalName: sapwiprotest-model
+            archive:
+              none: {}
+      container:
+        image: "docker.io/hyperscalaruser/text-clf-train:0.0.1"
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c"]
+        args:
+          - >
+            set -e && echo "---Start Training---" && python /app/src/train_scikit.py && ls -lR /app/model && echo "---End Training---"
