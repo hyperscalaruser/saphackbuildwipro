@@ -1,12 +1,12 @@
 apiVersion: ai.sap.com/v1alpha1
 kind: ServingTemplate
 metadata:
-  name: wiproleakageprediction-infer
+  name: wiplpinfer
   annotations:
     scenarios.ai.sap.com/description: "This scenario predicts the water leakage based on the various parameters such as flow and pressure"
-    scenarios.ai.sap.com/name: "wiproleakageprediction-sc"
+    scenarios.ai.sap.com/name: "wiplpsc"
     executables.ai.sap.com/description: "Inference executable for Water leakage predictions"
-    executables.ai.sap.com/name: "wiproleakageprediction-infer-exec"
+    executables.ai.sap.com/name: "wiplpinferexec"
   labels:
     scenarios.ai.sap.com/id: "wiproleakageprediction"
     executables.ai.sap.com/id: "wiproleakageprediction"
@@ -15,7 +15,7 @@ spec:
   inputs:
     parameters: []
     artifacts:
-      - name: wiproleakageprediction-model
+      - name: wiplpmodel
   template:
     apiVersion: "serving.kubeflow.org/v1beta1"
     metadata:
@@ -39,4 +39,4 @@ spec:
               protocol: TCP
           env:
             - name: STORAGE_URI
-              value: "{{inputs.artifacts.wiproleakageprediction-model}}"
+              value: "{{inputs.artifacts.wiplpmodel}}"
