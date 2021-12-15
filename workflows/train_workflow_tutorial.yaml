@@ -2,12 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: wiproleakageprediction-train
+  name: wiplptrain
   annotations:
     scenarios.ai.sap.com/description: "This scenario predicts the water leakage based on the various parameters such as flow and pressure"
-    scenarios.ai.sap.com/name: "wiproleakageprediction-sc"
+    scenarios.ai.sap.com/name: "wiplpsc"
     executables.ai.sap.com/description: "Python scikit learn based code "
-    executables.ai.sap.com/name: "wiproleakageprediction-train-exec"
+    executables.ai.sap.com/name: "wiplptrainexec"
     artifacts.ai.sap.com/wiproleakageprediction-data.kind: "dataset"
     artifacts.ai.sap.com/wiproleakageprediction-model.kind: "model"
   labels:
@@ -25,13 +25,13 @@ spec:
           ai.sap.com/resourcePlan: starter
       inputs:
         artifacts:
-          - name: wiproleakageprediction-data
+          - name: wiplpdata
             path: /app/data/
       outputs:
         artifacts:
-          - name: wiproleakageprediction-model
+          - name: wiplpmodel
             path: /app/model
-            globalName: wiproleakageprediction-model
+            globalName: wiplpmodel
             archive:
               none: {}
       container:
