@@ -4,7 +4,7 @@ kind: WorkflowTemplate
 metadata:
   name: wiproleakageprediction-train
   annotations:
-    scenarios.ai.sap.com/description: "This scenario predicts the water leakage based on the various parameters such as flow and pressure
+    scenarios.ai.sap.com/description: "This scenario predicts the water leakage based on the various parameters such as flow and pressure"
     scenarios.ai.sap.com/name: "wiproleakageprediction-sc"
     executables.ai.sap.com/description: "Python scikit learn based code "
     executables.ai.sap.com/name: "wiproleakageprediction-train-exec"
