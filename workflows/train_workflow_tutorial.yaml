@@ -2,42 +2,42 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: sapwiprotest-train
+  name: wiproleakageprediction-train
   annotations:
-    scenarios.ai.sap.com/description: "SAP developers tutorial scenario"
-    scenarios.ai.sap.com/name: "sapwiprotest-scenario"
-    executables.ai.sap.com/description: "Text classification Scikit training executable"
-    executables.ai.sap.com/name: "sapwiprotest-exec"
-    artifacts.ai.sap.com/text-data.kind: "dataset"
-    artifacts.ai.sap.com/text-model-tutorial.kind: "model"
+    scenarios.ai.sap.com/description: "This scenario predicts the water leakage based on the various parameters such as flow and pressure
+    scenarios.ai.sap.com/name: "wiproleakageprediction-sc"
+    executables.ai.sap.com/description: "Python scikit learn based code "
+    executables.ai.sap.com/name: "wiproleakageprediction-train-exec"
+    artifacts.ai.sap.com/wiproleakageprediction-data.kind: "dataset"
+    artifacts.ai.sap.com/wiproleakageprediction-model.kind: "model"
   labels:
-    scenarios.ai.sap.com/id: "sapwiprotest"
-    executables.ai.sap.com/id: "sapwiprotest"
+    scenarios.ai.sap.com/id: "wiproleakageprediction"
+    executables.ai.sap.com/id: "wiproleakageprediction"
     ai.sap.com/version: "1.0.0"
 spec:
   imagePullSecrets:
     - name: docker-registry-secret
-  entrypoint: text-clf-sk-training
+  entrypoint: wlp-train-entry-point
   templates:
-    - name: text-clf-sk-training
+    - name: wlp-train-entry-point
       metadata:
         labels:
           ai.sap.com/resourcePlan: starter
       inputs:
         artifacts:
-          - name: text-data
+          - name: wiproleakageprediction-data
             path: /app/data/
       outputs:
         artifacts:
-          - name: sapwiprotest-model
+          - name: wiproleakageprediction-model
             path: /app/model
-            globalName: sapwiprotest-model
+            globalName: wiproleakageprediction-model
             archive:
               none: {}
       container:
-        image: "docker.io/hyperscalaruser/text-clf-train:0.0.1"
+        image: "docker.io/hyperscalaruser/wlp-train:0.0.1"
         imagePullPolicy: Always
         command: ["/bin/sh", "-c"]
         args:
           - >
-            set -e && echo "---Start Training---" && python /app/src/train_scikit.py && ls -lR /app/model && echo "---End Training---"
+            set -e && echo "---Start Training---" && python /app/src/LeakageModel.py && ls -lR /app/model && echo "---End Training---"
