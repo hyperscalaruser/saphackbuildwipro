@@ -5,7 +5,6 @@ metadata:
   annotations:
     scenarios.ai.sap.com/description: "This scenario predicts the water leakage based on the various parameters such as flow and pressure
     scenarios.ai.sap.com/name: "wiproleakageprediction-sc"
-    scenarios.ai.sap.com/name: "sapwiprotest-scenario"
     executables.ai.sap.com/description: "Inference executable for text classification with Scikit-learn"
     executables.ai.sap.com/name: "wiproleakageprediction-infer-exec"
   labels:
