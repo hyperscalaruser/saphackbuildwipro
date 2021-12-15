@@ -33,7 +33,7 @@ spec:
         maxReplicas: 5
         containers:
         - name: kfserving-container
-          image: "docker.io/hyperscalaruser/wiplp-infer:0.0.1"
+          image: "docker.io/hyperscalaruser/wiplp-serve:0.0.1"
           ports:
             - containerPort: 9001
               protocol: TCP
